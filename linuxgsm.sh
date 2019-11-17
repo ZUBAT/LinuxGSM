@@ -46,8 +46,8 @@ userinput="${1}"
 ## GitHub Branch Select
 # Allows for the use of different function files
 # from a different repo and/or branch.
-githubuser="GameServerManagers"
-githubrepo="ZUBAT"
+githubuser="ZUBAT"
+githubrepo="LinuxGSM"
 githubbranch="master"
 
 # Core function that is required first.
