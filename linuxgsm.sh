@@ -47,7 +47,7 @@ userinput="${1}"
 # Allows for the use of different function files
 # from a different repo and/or branch.
 githubuser="GameServerManagers"
-githubrepo="LinuxGSM"
+githubrepo="ZUBAT"
 githubbranch="master"
 
 # Core function that is required first.
