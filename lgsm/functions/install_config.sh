@@ -4,7 +4,7 @@
 # Website: https://linuxgsm.com
 # Description: Creates default server configs.
 
-local commandname="INSTALL"
+local modulename="INSTALL"
 local commandaction="Install"
 local function_selfname="$(basename "$(readlink -f "${BASH_SOURCE[0]}")")"
 
@@ -56,7 +56,7 @@ fn_default_config_remote(){
 # Copys local default config to server config location.
 fn_default_config_local(){
 	echo -e "copying ${servercfgdefault} config file."
-	cp -nv "${servercfgfullpathdefault}" "${servercfgfullpath}"
+	cp -nv "${servercfgdir}/${servercfgdefault}" "${servercfgfullpath}"
 	fn_sleep_time
 }
 
@@ -147,6 +147,12 @@ fn_set_dst_config_vars(){
 if [ "${shortname}" == "sdtd" ]; then
 	gamedirname="7DaysToDie"
 	fn_default_config_local
+elif [ "${shortname}" == "ac" ]; then
+	gamedirname="AssettoCorsa"
+	array_configs+=( server_cfg.ini )
+	fn_fetch_default_config
+	fn_default_config_remote
+	fn_set_config_vars
 elif [ "${shortname}" == "ahl" ]; then
 	gamedirname="ActionHalfLife"
 	array_configs+=( server.cfg )
@@ -436,6 +442,12 @@ elif [ "${shortname}" == "l4d2" ]; then
 	fn_set_config_vars
 elif [ "${shortname}" == "mc" ]; then
 	gamedirname="Minecraft"
+	array_configs+=( server.properties )
+	fn_fetch_default_config
+	fn_default_config_remote
+	fn_set_config_vars
+elif [ "${shortname}" == "mcb" ]; then
+	gamedirname="MinecraftBedrock"
 	array_configs+=( server.properties )
 	fn_fetch_default_config
 	fn_default_config_remote

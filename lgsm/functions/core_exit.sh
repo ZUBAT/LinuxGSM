@@ -20,9 +20,11 @@ if [ "$(whoami)" == "root" ]; then
 	find "${logdir}"/ -group root -prune -exec rm -rf {} + > /dev/null 2>&1
 fi
 
-if [ -n "${exitbypass}" ]; then
+if [ "${exitbypass}" ]; then
 	unset exitbypass
-elif [ -n "${exitcode}" ]&&[ "${exitcode}" != "0" ]; then
+elif [ "${exitcode}" ]&&[ "${exitcode}" != "0" ]; then
+	# List LinuxGSM version in logs
+	fn_script_log_info "LinuxGSM version: ${version}"
 	if [ "${exitcode}" == "1" ]; then
 		fn_script_log_fatal "${function_selfname} exiting with code: ${exitcode}"
 	elif [ "${exitcode}" == "2" ]; then
@@ -36,8 +38,19 @@ elif [ -n "${exitcode}" ]&&[ "${exitcode}" != "0" ]; then
 	# remove trap.
 	trap - INT
 	exit "${exitcode}"
-else
+elif [ "${exitcode}" ]&&[ "${exitcode}" == "0" ]; then
+	# List LinuxGSM version in logs
+	fn_script_log_info "LinuxGSM version: ${version}"
 	fn_script_log_pass "${function_selfname} exiting with code: ${exitcode}"
+	fn_exit_dev_debug
+	# remove trap.
+	trap - INT
+	exit "${exitcode}"
+else
+	# List LinuxGSM version in logs
+	fn_script_log_info "LinuxGSM version: ${version}"
+	fn_print_error "No exit code set"
+	fn_script_log_pass "${function_selfname} exiting with code: NOT SET"
 	fn_exit_dev_debug
 	# remove trap.
 	trap - INT
